@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AXDORO // Multi-Device Responsive Client Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090b;
+      --card-bg: #18181b;
+      --border: #27272a;
+      --accent: #d97706;
+      --accent-glow: rgba(217, 119, 6, 0.25);
+      --text: #f4f4f5;
+      --muted: #a1a1aa;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(18, 18, 20, 0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .badge-logo {
+      background: #000;
+      color: #f59e0b;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      font-size: 15px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid #3f3f46;
+      letter-spacing: -0.5px;
+    }
+    .brand-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .brand-sub {
+      font-size: 11px;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .controls-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #141417;
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .view-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .view-btn:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .view-btn.active {
+      background: #27272a;
+      color: #fbbf24;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .direct-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: #27272a;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .direct-link:hover {
+      color: #fff;
+      border-color: #f59e0b;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+      background: radial-gradient(circle at 50% 0%, #1f1f28 0%, #09090b 70%);
+    }
+
+    .showcase-container {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 48px;
+      width: 100%;
+      max-width: 1700px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .device-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .device-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .device-label .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    /* MOBILE FRAME (iPhone 15 Pro) */
+    .frame-mobile {
+      width: 414px;
+      height: 852px;
+      background: #1e1e24;
+      border-radius: 54px;
+      padding: 12px;
+      box-shadow:
+        0 0 0 4px #2b2b36,
+        0 0 0 6px #121216,
+        0 25px 60px -12px rgba(0, 0, 0, 0.85),
+        0 0 40px rgba(217, 119, 6, 0.15);
+      position: relative;
+    }
+    .frame-mobile .screen {
+      width: 390px;
+      height: 828px;
+      background: #faf9f6;
+      border-radius: 44px;
+      overflow: hidden;
+      position: relative;
+    }
+    .frame-mobile .dynamic-island {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 115px;
+      height: 28px;
+      background: #000;
+      border-radius: 20px;
+      z-index: 50;
+      pointer-events: none;
+    }
+    .frame-mobile .phone-status-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 44px;
+      padding: 10px 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #18181b;
+      z-index: 40;
+      pointer-events: none;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    .frame-mobile iframe {
+      width: 390px;
+      height: 828px;
+      border: none;
+      display: block;
+    }
+    .frame-mobile .home-indicator {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 130px;
+      height: 4px;
+      background: #18181b;
+      border-radius: 2px;
+      z-index: 50;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    /* TABLET FRAME (iPad Air) */
+    .frame-tablet {
+      width: 804px;
+      height: 1024px;
+      background: #1c1c22;
+      border-radius: 36px;
+      padding: 18px;
+      box-shadow:
+        0 0 0 3px #2b2b36,
+        0 0 0 5px #121216,
+        0 30px 70px -15px rgba(0, 0, 0, 0.9),
+        0 0 40px rgba(217, 119, 6, 0.15);
+      position: relative;
+    }
+    .frame-tablet .screen {
+      width: 768px;
+      height: 988px;
+      background: #faf9f6;
+      border-radius: 22px;
+      overflow: hidden;
+      position: relative;
+    }
+    .frame-tablet .camera-dot {
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #000;
+    }
+    .frame-tablet iframe {
+      width: 768px;
+      height: 988px;
+      border: none;
+      display: block;
+    }
+    .frame-tablet .home-indicator {
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 160px;
+      height: 4px;
+      background: #18181b;
+      border-radius: 2px;
+      z-index: 50;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    /* DESKTOP FRAME (MacBook Pro) */
+    .frame-desktop {
+      width: 1200px;
+      height: 780px;
+      background: #1e1e24;
+      border-radius: 16px;
+      box-shadow:
+        0 0 0 1px #3f3f46,
+        0 35px 80px -20px rgba(0, 0, 0, 0.95),
+        0 0 50px rgba(217, 119, 6, 0.15);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .browser-toolbar {
+      background: #141417;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .window-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .window-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+    .url-pill {
+      flex: 1;
+      max-width: 500px;
+      background: #27272a;
+      border-radius: 8px;
+      padding: 4px 12px;
+      font-size: 11px;
+      color: #a1a1aa;
+      font-family: 'JetBrains Mono', monospace;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid #3f3f46;
+    }
+    .frame-desktop iframe {
+      flex: 1;
+      width: 100%;
+      border: none;
+      background: #faf9f6;
+    }
+
+    /* TRIPLE MODE SCALING */
+    .mode-triple {
+      gap: 24px;
+      align-items: center;
+      transform: scale(0.72);
+      transform-origin: top center;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 12px 24px;
+      background: #09090b;
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #10b981;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand-group">
+      <div class="badge-logo">AXDORO</div>
+      <div>
+        <div class="brand-title">Multi-Device Client Demonstration Console</div>
+        <div class="brand-sub">Real-Time Responsive Engine • 240 GSM Luxury Apparel</div>
+      </div>
+    </div>
+
+    <div class="controls-group">
+      <button class="view-btn" id="btn-mobile" onclick="setViewMode('mobile')">
+        <span>📱</span> iPhone (390px)
+      </button>
+      <button class="view-btn" id="btn-tablet" onclick="setViewMode('tablet')">
+        <span>📑</span> iPad (768px)
+      </button>
+      <button class="view-btn" id="btn-desktop" onclick="setViewMode('desktop')">
+        <span>💻</span> Desktop (1440px)
+      </button>
+      <button class="view-btn active" id="btn-triple" onclick="setViewMode('triple')">
+        <span>⚡</span> Side-by-Side (Triple)
+      </button>
+    </div>
+
+    <a href="./index.html" class="direct-link" target="_blank">Open Full Screen ↗</a>
+  </header>
+
+  <main>
+    <div class="showcase-container mode-triple" id="showcase">
+      <!-- MOBILE CARD -->
+      <div class="device-card" id="card-mobile">
+        <div class="device-label">
+          <span class="dot"></span>
+          <span>MOBILE // iPhone 15 Pro (390 × 844)</span>
+        </div>
+        <div class="frame-mobile">
+          <div class="screen">
+            <div class="dynamic-island"></div>
+            <div class="phone-status-bar">
+              <span>9:41</span>
+              <span>100% 🔋</span>
+            </div>
+            <iframe id="iframe-mobile" src="./index.html"></iframe>
+            <div class="home-indicator"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABLET CARD -->
+      <div class="device-card" id="card-tablet">
+        <div class="device-label">
+          <span class="dot"></span>
+          <span>TABLET // iPad Air (768 × 1024)</span>
+        </div>
+        <div class="frame-tablet">
+          <div class="camera-dot"></div>
+          <div class="screen">
+            <iframe id="iframe-tablet" src="./index.html"></iframe>
+            <div class="home-indicator"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DESKTOP CARD -->
+      <div class="device-card" id="card-desktop">
+        <div class="device-label">
+          <span class="dot"></span>
+          <span>DESKTOP // 1440 × 900 (Panoramic Experience)</span>
+        </div>
+        <div class="frame-desktop">
+          <div class="browser-toolbar">
+            <div class="window-dots">
+              <div class="window-dot dot-red"></div>
+              <div class="window-dot dot-yellow"></div>
+              <div class="window-dot dot-green"></div>
+            </div>
+            <div class="url-pill">
+              <span>🔒</span>
+              <span id="desktop-url">https://keshav-bb.github.io/axdoro/</span>
+            </div>
+          </div>
+          <iframe id="iframe-desktop" src="./index.html"></iframe>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="status-badge">
+      <span>●</span> Live Responsive Preview Engine Active
+    </div>
+    <div>
+      Touch gestures, 360° orbital dragging, and adaptive multi-column layouts enabled across all devices.
+    </div>
+  </footer>
+
+  <script>
+    function setViewMode(mode) {
+      document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-' + mode);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const showcase = document.getElementById('showcase');
+      const cardMobile = document.getElementById('card-mobile');
+      const cardTablet = document.getElementById('card-tablet');
+      const cardDesktop = document.getElementById('card-desktop');
+
+      showcase.className = 'showcase-container';
+
+      if (mode === 'mobile') {
+        cardMobile.style.display = 'flex';
+        cardTablet.style.display = 'none';
+        cardDesktop.style.display = 'none';
+      } else if (mode === 'tablet') {
+        cardMobile.style.display = 'none';
+        cardTablet.style.display = 'flex';
+        cardDesktop.style.display = 'none';
+      } else if (mode === 'desktop') {
+        cardMobile.style.display = 'none';
+        cardTablet.style.display = 'none';
+        cardDesktop.style.display = 'flex';
+      } else if (mode === 'triple') {
+        showcase.classList.add('mode-triple');
+        cardMobile.style.display = 'flex';
+        cardTablet.style.display = 'flex';
+        cardDesktop.style.display = 'flex';
+      }
+
+      // Update URL query without reload
+      const url = new URL(window.location);
+      url.searchParams.set('device', mode);
+      window.history.replaceState({}, '', url);
+    }
+
+    // Auto-detect mode from URL param or hash on load
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const hash = window.location.hash.replace('#', '');
+      const mode = params.get('device') || hash;
+      if (['mobile', 'tablet', 'desktop', 'triple'].includes(mode)) {
+        setViewMode(mode);
+      }
+    });
+  </script>
+</body>
+</html>
