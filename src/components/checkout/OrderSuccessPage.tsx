@@ -6,10 +6,6 @@ import {
   Truck,
   MessageCircle,
   ArrowRight,
-  ShoppingBag,
-  Sparkles,
-  MapPin,
-  Phone,
 } from 'lucide-react';
 import { useStore } from '../../context/StoreContext';
 import { formatINR } from '../../utils/currency';
@@ -27,7 +23,7 @@ export const OrderSuccessPage: React.FC = () => {
         origin: { y: 0.6 },
         colors: ['#f59e0b', '#10b981', '#ffffff'],
       });
-    } catch (e) {
+    } catch {
       // ignore
     }
   }, []);

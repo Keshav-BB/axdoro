@@ -48,7 +48,7 @@ export function calculateBiometrics(
   gender: Gender = 'male',
   build: BodyBuild = 'athletic',
   selectedSize: TShirtSize = 'L',
-  category: ProductCategory = 't-shirts'
+  _category: ProductCategory = 't-shirts'
 ): CalculatedBiometrics {
   // Height in meters & BMI
   const heightM = heightCm / 100;

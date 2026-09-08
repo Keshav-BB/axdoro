@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState, useMemo } from 'react';
-import { RotateCw, Sparkles, Layers, Eye, Scan } from 'lucide-react';
+import React, { useRef, useState, useMemo } from 'react';
+import { RotateCw, Layers, Eye, Scan } from 'lucide-react';
 import { CalculatedBiometrics } from '../../utils/bodyBiometrics';
 import { Product, TShirtSize } from '../../types';
 
@@ -106,12 +106,10 @@ export const PersonalAvatar3DCanvas: React.FC<PersonalAvatar3DCanvasProps> = ({
 
   // Depth-based lighting / shading
   const isFacingFront = cos >= 0;
-  const isSideProfile = Math.abs(cos) < 0.35;
   const faceOpacity = Math.max(0.1, (cos + 1) / 2); // fades when looking at back
 
   // Colors
   const garmentColor = garmentProduct?.colors?.[0]?.hex || '#18181b';
-  const isDarkGarment = true;
 
   // Tension heatmap color: green for optimal ease (>5cm), amber for fitted (2-5cm), red for tight (<2cm)
   const tensionColor = easeCm >= 6 ? '#10b981' : easeCm >= 2 ? '#f59e0b' : '#ef4444';
@@ -123,7 +121,7 @@ export const PersonalAvatar3DCanvas: React.FC<PersonalAvatar3DCanvasProps> = ({
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
           <span className="font-bold text-zinc-900">
-            3D BIOMETRIC AVATAR: <span className="text-amber-600">{rotationAngle}°</span>
+            3D AVATAR ({selectedSize}): <span className="text-amber-600">{rotationAngle}°</span>
           </span>
         </div>
 
@@ -131,7 +129,7 @@ export const PersonalAvatar3DCanvas: React.FC<PersonalAvatar3DCanvasProps> = ({
           <button
             type="button"
             onClick={() => setShowTensionHeatmap(!showTensionHeatmap)}
-            className={`px-2 py-1 rounded-lg text-[10px] font-mono font-bold flex items-center gap-1 transition-all ${
+            className={`px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold flex items-center gap-1 transition-all ${
               showTensionHeatmap
                 ? 'bg-amber-400 text-zinc-950 shadow-xs'
                 : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'
@@ -144,7 +142,7 @@ export const PersonalAvatar3DCanvas: React.FC<PersonalAvatar3DCanvasProps> = ({
           <button
             type="button"
             onClick={() => setRenderMode(renderMode === 'shaded' ? 'wireframe' : 'shaded')}
-            className={`px-2 py-1 rounded-lg text-[10px] font-mono font-bold flex items-center gap-1 transition-all ${
+            className={`px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold flex items-center gap-1 transition-all ${
               renderMode === 'wireframe'
                 ? 'bg-zinc-950 text-white shadow-xs'
                 : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'
@@ -198,9 +196,9 @@ export const PersonalAvatar3DCanvas: React.FC<PersonalAvatar3DCanvasProps> = ({
             </radialGradient>
 
             <linearGradient id="clothLightGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#1f1f23" />
+              <stop offset="0%" stopColor={garmentColor} />
               <stop offset="35%" stopColor="#2e2e36" />
-              <stop offset="70%" stopColor="#1a1a1e" />
+              <stop offset="70%" stopColor={garmentColor} />
               <stop offset="100%" stopColor="#0f0f12" />
             </linearGradient>
 
@@ -443,7 +441,7 @@ export const PersonalAvatar3DCanvas: React.FC<PersonalAvatar3DCanvasProps> = ({
 
         {/* FLOATING ANATOMICAL FIT HOTSPOTS */}
         {/* Hotspot 1: Shoulder Fall */}
-        <div className="absolute top-28 left-4 px-2.5 py-1 rounded-xl bg-zinc-950/85 backdrop-blur-md text-white text-[10px] font-mono border border-amber-400/40 shadow-lg flex items-center gap-1.5 pointer-events-none">
+        <div className="absolute top-28 left-4 px-3 py-1 rounded-xl bg-zinc-950/90 backdrop-blur-md text-white text-[11px] font-mono border border-amber-400/40 shadow-lg flex items-center gap-1.5 pointer-events-none">
           <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
           <span>
             Drop: <strong>{biometrics.sizeEvaluation.shoulderDropInches}" Boxy</strong>
@@ -451,7 +449,7 @@ export const PersonalAvatar3DCanvas: React.FC<PersonalAvatar3DCanvasProps> = ({
         </div>
 
         {/* Hotspot 2: Chest Breathing Ease */}
-        <div className="absolute top-44 right-4 px-2.5 py-1 rounded-xl bg-zinc-950/85 backdrop-blur-md text-white text-[10px] font-mono border border-amber-400/40 shadow-lg flex items-center gap-1.5 pointer-events-none">
+        <div className="absolute top-44 right-4 px-3 py-1 rounded-xl bg-zinc-950/90 backdrop-blur-md text-white text-[11px] font-mono border border-amber-400/40 shadow-lg flex items-center gap-1.5 pointer-events-none">
           <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
           <span>
             Ease: <strong>+{easeCm} cm</strong>
@@ -459,21 +457,21 @@ export const PersonalAvatar3DCanvas: React.FC<PersonalAvatar3DCanvasProps> = ({
         </div>
 
         {/* Hotspot 3: Hemline Position */}
-        <div className="absolute bottom-12 left-4 px-2.5 py-1 rounded-xl bg-zinc-950/85 backdrop-blur-md text-white text-[10px] font-mono border border-amber-400/40 shadow-lg flex items-center gap-1.5 pointer-events-none">
+        <div className="absolute bottom-12 left-4 px-3 py-1 rounded-xl bg-zinc-950/90 backdrop-blur-md text-white text-[11px] font-mono border border-amber-400/40 shadow-lg flex items-center gap-1.5 pointer-events-none">
           <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
           <span>{biometrics.sizeEvaluation.hemlineDescription}</span>
         </div>
 
         {/* Orbit Interaction Hint */}
-        <div className="absolute bottom-2 right-3 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-xs text-[9px] font-mono text-zinc-300 flex items-center gap-1 pointer-events-none">
-          <RotateCw className="w-2.5 h-2.5 text-amber-400 animate-spin-slow" />
+        <div className="absolute bottom-2 right-3 px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-xs text-[11px] font-mono text-zinc-200 flex items-center gap-1.5 pointer-events-none">
+          <RotateCw className="w-3 h-3 text-amber-400 animate-spin-slow" />
           <span>Drag to Rotate 360°</span>
         </div>
       </div>
 
       {/* 360 Rotation Scrub Slider & Angle Buttons */}
       <div className="w-full max-w-[380px] pt-3 space-y-2">
-        <div className="flex items-center gap-2 text-[10px] font-mono font-bold text-zinc-400">
+        <div className="flex items-center gap-2 text-xs font-mono font-bold text-zinc-500">
           <span>0° FRONT</span>
           <input
             type="range"
@@ -498,10 +496,10 @@ export const PersonalAvatar3DCanvas: React.FC<PersonalAvatar3DCanvasProps> = ({
               key={btn.angle}
               type="button"
               onClick={() => onAngleChange(btn.angle)}
-              className={`py-1 rounded-lg text-[10px] font-mono transition-all border cursor-pointer ${
+              className={`py-1.5 rounded-lg text-[11px] font-mono font-medium transition-all border cursor-pointer ${
                 Math.abs(rotationAngle - btn.angle) < 15
                   ? 'bg-zinc-950 text-white font-bold border-zinc-950 shadow-xs'
-                  : 'bg-zinc-50 hover:bg-zinc-100 text-zinc-600 border-zinc-200'
+                  : 'bg-zinc-50 hover:bg-zinc-100 text-zinc-700 border-zinc-200'
               }`}
             >
               {btn.label}

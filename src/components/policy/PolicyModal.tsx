@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useStore } from '../../context/StoreContext';
 import { 
   X, 
@@ -11,17 +11,11 @@ import {
   Phone, 
   Mail, 
   MapPin, 
-  CheckCircle2, 
-  Clock, 
   Printer, 
-  Search,
-  ExternalLink,
-  ChevronRight
 } from 'lucide-react';
 
 export const PolicyModal: React.FC = () => {
   const { isPolicyModalOpen, setIsPolicyModalOpen, activePolicyTab, setActivePolicyTab } = useStore();
-  const [searchTerm, setSearchTerm] = useState('');
 
   // Handle ESC key to close
   useEffect(() => {

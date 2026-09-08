@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Package, MessageCircle, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
+import { X, Package, MessageCircle, ArrowRight } from 'lucide-react';
 import { useStore } from '../../context/StoreContext';
 import { getWhatsAppBulkEnquiryUrl } from '../../utils/whatsapp';
 
@@ -8,7 +8,6 @@ export const BulkOrderModal: React.FC = () => {
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
   const [companyOrCollege, setCompanyOrCollege] = useState('');
   const [quantity, setQuantity] = useState(50);
   const [fitType, setFitType] = useState<'240 GSM Oversized' | '240 GSM Regular Half-Sleeve'>(

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Product, CartItem, Order, TShirtSize, ColorOption, OrderStatus, User, UserAddress } from '../types';
 import { INITIAL_PRODUCTS, INITIAL_ORDERS } from '../data/initialProducts';
+import { DEMO_USER } from '../data/demoAccounts';
 
 export type ActiveView =
   | 'home'
@@ -101,55 +102,9 @@ interface StoreContextType {
   adminLogout: () => void;
 }
 
-export const DEMO_USER_CREDENTIALS = {
-  name: 'Karthik Subramanian',
-  phone: '9840123456',
-  email: 'karthik.sub@gmail.com',
-  password: 'axdoro2026',
-  otp: '123456',
-  tier: 'Obsidian VIP (450 Pts)',
-};
-
-export const DEMO_ADMIN_CREDENTIALS = {
-  name: 'Vikramaditya Seth',
-  role: 'Operations & Inventory Director',
-  email: 'admin@axdoro.com',
-  password: 'axdoroAdmin2026!',
-  pin: '9922',
-  avatar: 'VS',
-};
-
-export const DEMO_USER: User = {
-  id: 'usr_849201',
-  name: 'Karthik Subramanian',
-  phone: '9840123456',
-  email: 'karthik.sub@gmail.com',
-  avatar: 'KS',
-  loyaltyPoints: 450,
-  tier: 'Obsidian VIP',
-  preferredSize: 'L',
-  addresses: [
-    {
-      id: 'addr_1',
-      label: 'Home',
-      street: '42, 2nd Main Road, Anna Nagar West',
-      city: 'Chennai',
-      state: 'Tamil Nadu',
-      pincode: '600040',
-      isDefault: true,
-    },
-    {
-      id: 'addr_2',
-      label: 'Office',
-      street: 'Block B, DLF Cybercity, Manapakkam',
-      city: 'Chennai',
-      state: 'Tamil Nadu',
-      pincode: '600089',
-      isDefault: false,
-    },
-  ],
-  joinedDate: 'January 2026',
-};
+function generateAddressId(): string {
+  return `addr_${Date.now()}`;
+}
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
@@ -168,7 +123,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         ) {
           return parsed;
         }
-      } catch (e) {}
+      } catch {}
     }
     // Clear stale legacy caches
     try {
@@ -176,7 +131,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       localStorage.removeItem('axdoro_products_v3');
       localStorage.removeItem('axdoro_products_v2');
       localStorage.removeItem('axdoro_products');
-    } catch (e) {}
+    } catch {}
     return INITIAL_PRODUCTS;
   });
 
@@ -193,7 +148,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         ) {
           return parsed;
         }
-      } catch (e) {}
+      } catch {}
     }
     return [
       {
@@ -284,7 +239,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (saved) {
       try {
         return JSON.parse(saved);
-      } catch (e) {}
+      } catch {}
     }
     if (urlParams.get('demoUser') === 'true') {
       return DEMO_USER;
@@ -360,7 +315,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (!currentUser) return;
     const newAddr: UserAddress = {
       ...address,
-      id: `addr_${Date.now()}`,
+      id: generateAddressId(),
     };
     const updated = {
       ...currentUser,
@@ -609,6 +564,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   );
 };
 
+// eslint-disable-next-line react/only-export-components, react-refresh/only-export-components
 export const useStore = () => {
   const context = useContext(StoreContext);
   if (!context) {

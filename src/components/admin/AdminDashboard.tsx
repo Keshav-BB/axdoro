@@ -10,26 +10,17 @@ import {
   ShieldCheck,
   Search,
   Users,
-  BarChart3,
   Activity,
-  ArrowUpRight,
   Download,
-  Smartphone,
-  Laptop,
-  MapPin,
-  Clock,
-  Percent,
   CheckCircle2,
-  Filter,
   Layers,
-  Sparkles,
   ChevronLeft,
   ChevronRight,
-  RefreshCw,
   LogOut,
 } from 'lucide-react';
-import { useStore, DEMO_ADMIN_CREDENTIALS } from '../../context/StoreContext';
-import { Product, OrderStatus, TShirtSize } from '../../types';
+import { useStore } from '../../context/StoreContext';
+import { DEMO_ADMIN_CREDENTIALS } from '../../data/demoAccounts';
+import { Product, OrderStatus } from '../../types';
 import { formatINR } from '../../utils/currency';
 
 type AdminTab = 
@@ -67,14 +58,9 @@ export const AdminDashboard: React.FC = () => {
   const [productSearch, setProductSearch] = useState('');
   const [productPage, setProductPage] = useState(1);
   const [orderSearch, setOrderSearch] = useState('');
-  const [selectedAgeBracket, setSelectedAgeBracket] = useState<string>('all');
 
   // KPI Calculations
   const totalRevenue = orders.reduce((sum, o) => sum + o.total, 0);
-  const totalUnitsSold = orders.reduce(
-    (sum, o) => sum + o.items.reduce((iSum, item) => iSum + item.quantity, 0),
-    0
-  );
   const totalGSTCollected = orders.reduce((sum, o) => sum + o.gstAmount, 0);
   const lowStockThreshold = 8;
   const lowStockProducts = products.filter((p) =>
@@ -153,15 +139,6 @@ export const AdminDashboard: React.FC = () => {
     setIsAddModalOpen(false);
     setNewProdName('');
     showToast(`Published new 240 GSM silhouette "${newProd.name}"`, 'success');
-  };
-
-  const handleUpdateStock = (productId: string, size: TShirtSize, newStock: number) => {
-    const prod = products.find((p) => p.id === productId);
-    if (!prod) return;
-    const updatedSizes = prod.sizes.map((s) =>
-      s.size === size ? { ...s, stock: Math.max(0, newStock) } : s
-    );
-    updateProduct({ ...prod, sizes: updatedSizes });
   };
 
   const handleUpdatePrice = (productId: string, price: number, originalPrice: number) => {
@@ -941,7 +918,7 @@ export const AdminDashboard: React.FC = () => {
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-6 gap-1 text-center font-mono text-[10px]">
+                  <div className="grid grid-cols-6 gap-1 text-center font-mono text-xs">
                     {p.sizes.map((s) => (
                       <div
                         key={s.size}
@@ -951,7 +928,7 @@ export const AdminDashboard: React.FC = () => {
                             : 'bg-white text-zinc-700 border border-zinc-200'
                         }`}
                       >
-                        <div className="text-[8px] text-zinc-400">{s.size}</div>
+                        <div className="text-[10px] font-bold text-zinc-500">{s.size}</div>
                         <div>{s.stock}</div>
                       </div>
                     ))}
@@ -1347,7 +1324,7 @@ export const AdminDashboard: React.FC = () => {
                 { stage: '3. Added to Bag (Cart Creation)', count: '3,840', pct: 11.2, note: '11.2% add-to-bag intent' },
                 { stage: '4. Initiated Checkout', count: '2,980', pct: 8.7, note: '77.6% cart-to-checkout conversion' },
                 { stage: '5. Completed Orders (Paid)', count: '2,210', pct: 6.4, note: '74.2% payment completion rate' },
-              ].map((step, idx) => (
+              ].map((step) => (
                 <div key={step.stage} className="p-3.5 bg-zinc-50 rounded-xl border border-zinc-200 space-y-1.5">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs font-mono">
                     <span className="font-bold text-zinc-900">{step.stage}</span>

@@ -144,7 +144,7 @@ export const ProductDetailPage: React.FC = () => {
                 <div>
                   <div className="text-xs font-bold text-zinc-900 flex items-center gap-1.5">
                     AI "See The Fit" Drape Simulator
-                    <span className="bg-purple-100 text-purple-700 text-[9px] font-mono px-1.5 py-0.5 rounded font-bold">
+                    <span className="bg-purple-100 text-purple-700 text-[11px] font-mono px-2 py-0.5 rounded font-bold">
                       NEW
                     </span>
                   </div>
@@ -297,7 +297,7 @@ export const ProductDetailPage: React.FC = () => {
                     }`}
                   >
                     <span>{sz}</span>
-                    <span className="text-[9px] font-normal">
+                    <span className="text-[10px] font-mono font-medium">
                       {isAvailable ? `${stock} left` : 'Sold out'}
                     </span>
                   </button>

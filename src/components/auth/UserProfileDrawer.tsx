@@ -2,25 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useStore } from '../../context/StoreContext';
 import { 
   X, 
-  User as UserIcon, 
   ShoppingBag, 
   MapPin, 
   Ruler, 
   LogOut, 
   Plus, 
   Trash2, 
-  Check, 
-  ExternalLink, 
   FileText, 
   Truck, 
   ShieldCheck, 
   Sparkles,
-  Phone,
-  Mail,
   Crown
 } from 'lucide-react';
 import { formatINR } from '../../utils/currency';
-import { TShirtSize, UserAddress } from '../../types';
+import { TShirtSize } from '../../types';
 
 export const UserProfileDrawer: React.FC = () => {
   const { 

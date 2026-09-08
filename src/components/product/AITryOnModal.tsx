@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Upload, CheckCircle2, User, X, ArrowRight, Zap, RefreshCw } from 'lucide-react';
+import { Sparkles, Upload, CheckCircle2, X, ArrowRight, Zap, RefreshCw } from 'lucide-react';
 import { Product, TShirtSize } from '../../types';
 import { useStore } from '../../context/StoreContext';
 

@@ -105,7 +105,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div>
           {/* Category & Rating */}
           <div className="flex items-center justify-between text-xs text-zinc-500 mb-1">
-            <span className="font-mono uppercase text-[10px] tracking-wider text-zinc-500">
+            <span className="font-mono uppercase text-[11px] font-semibold tracking-wider text-zinc-500">
               {product.categoryLabel}
             </span>
             <div className="flex items-center gap-1 text-amber-600 text-[11px] font-bold">
@@ -128,7 +128,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             <span className="text-xs text-zinc-400 line-through font-mono">
               {formatINR(product.originalPrice)}
             </span>
-            <span className="text-[10px] font-semibold text-emerald-700 font-mono">
+            <span className="text-[11px] font-semibold text-emerald-700 font-mono">
               Free TN Delivery
             </span>
           </div>

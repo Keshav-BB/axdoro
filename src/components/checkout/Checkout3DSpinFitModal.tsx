@@ -3,32 +3,18 @@ import {
   RotateCw,
   Play,
   Pause,
-  CloudSun,
-  Thermometer,
-  Droplets,
-  Wind,
-  ShieldCheck,
   Sparkles,
   Camera,
   Upload,
   CheckCircle2,
   X,
   ArrowRight,
-  User,
-  Sliders,
-  Check,
-  MapPin,
-  HelpCircle,
-  Zap,
-  Maximize2,
   Scale,
   Ruler,
-  Scan
 } from 'lucide-react';
 import { CartItem, TShirtSize } from '../../types';
 import { useStore } from '../../context/StoreContext';
-import { formatINR } from '../../utils/currency';
-import { getDistrictWeather, TN_WEATHER_DATA } from '../../data/weatherData';
+import { getDistrictWeather } from '../../data/weatherData';
 import {
   calculateBiometrics,
   CalculatedBiometrics,
@@ -118,13 +104,14 @@ export const Checkout3DSpinFitModal: React.FC<Checkout3DSpinFitModalProps> = ({
   const [isAutoSpinning, setIsAutoSpinning] = useState(false);
   const [isScanning, setIsScanning] = useState(false);
   const [currentDistrict, setCurrentDistrict] = useState(selectedCity || 'Chennai');
-  const [viewPerspective, setViewPerspective] = useState<'avatar-3d' | 'garment-360'>('avatar-3d');
 
   const autoSpinTimerRef = useRef<number | null>(null);
 
   // Sync city when prop changes
   useEffect(() => {
-    if (selectedCity) setCurrentDistrict(selectedCity);
+    if (!selectedCity) return;
+    const timer = setTimeout(() => setCurrentDistrict(selectedCity), 0);
+    return () => clearTimeout(timer);
   }, [selectedCity]);
 
   // ESC key listener & body scroll lock

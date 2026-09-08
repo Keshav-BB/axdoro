@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useStore, DEMO_USER, DEMO_USER_CREDENTIALS } from '../../context/StoreContext';
+import { useStore } from '../../context/StoreContext';
+import { DEMO_USER, DEMO_USER_CREDENTIALS } from '../../data/demoAccounts';
 import { 
   X, 
   Phone, 
   Mail, 
-  Lock, 
   Eye, 
   EyeOff, 
   MessageCircle, 
@@ -12,11 +12,6 @@ import {
   ShieldCheck, 
   Sparkles, 
   CheckCircle2, 
-  Clock, 
-  ArrowRight, 
-  KeyRound,
-  User as UserIcon,
-  HelpCircle
 } from 'lucide-react';
 import { TShirtSize, User } from '../../types';
 
@@ -57,7 +52,7 @@ export const AuthModal: React.FC = () => {
   const [otpChannelUsed, setOtpChannelUsed] = useState<'sms' | 'whatsapp' | 'email'>('sms');
   const [otpDigits, setOtpDigits] = useState(['', '', '', '', '', '']);
   const [countdown, setCountdown] = useState(30);
-  const [canResend, setCanResend] = useState(false);
+  const canResend = countdown === 0;
   const [simulatedNotification, setSimulatedNotification] = useState<string | null>(null);
 
   const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -86,8 +81,6 @@ export const AuthModal: React.FC = () => {
       timer = setInterval(() => {
         setCountdown((prev) => prev - 1);
       }, 1000);
-    } else if (countdown === 0) {
-      setCanResend(true);
     }
     return () => clearInterval(timer);
   }, [otpSent, countdown]);
@@ -99,7 +92,6 @@ export const AuthModal: React.FC = () => {
     setOtpChannelUsed(type);
     setOtpSent(true);
     setCountdown(30);
-    setCanResend(false);
     setOtpDigits(['', '', '', '', '', '']);
 
     const generatedCode = type === 'whatsapp' ? '849201' : type === 'email' ? '742918' : '123456';
@@ -163,7 +155,7 @@ export const AuthModal: React.FC = () => {
     verifyAndLogin(code);
   };
 
-  const verifyAndLogin = (code: string) => {
+  const verifyAndLogin = (_code?: string) => {
     // Authenticate user
     const loggedUser: User = {
       ...DEMO_USER,

@@ -5,18 +5,14 @@ import {
   SlidersHorizontal, 
   ChevronLeft, 
   ChevronRight, 
-  Sparkles, 
   RotateCcw, 
   Filter,
-  Check,
-  Eye,
   ShoppingBag,
   Grid3X3,
   Grid2X2
 } from 'lucide-react';
 import { ProductCard } from './ProductCard';
 import { useStore } from '../../context/StoreContext';
-import { TShirtSize, Product } from '../../types';
 
 export const ProductGrid: React.FC = () => {
   const { 
@@ -57,7 +53,8 @@ export const ProductGrid: React.FC = () => {
 
   // Reset to page 1 whenever filters change
   useEffect(() => {
-    setCurrentPage(1);
+    const timer = setTimeout(() => setCurrentPage(1), 0);
+    return () => clearTimeout(timer);
   }, [selectedCategory, selectedSizeFilter, searchQuery, priceMax, inStockOnly, sortBy, itemsPerPage]);
 
   const filteredProducts = useMemo(() => {

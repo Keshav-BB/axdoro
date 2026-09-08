@@ -9,11 +9,11 @@ import {
   ArrowRight, 
   ArrowLeft,
   Sparkles,
-  CheckCircle2,
   AlertTriangle,
   Server
 } from 'lucide-react';
-import { useStore, DEMO_ADMIN_CREDENTIALS } from '../../context/StoreContext';
+import { useStore } from '../../context/StoreContext';
+import { DEMO_ADMIN_CREDENTIALS } from '../../data/demoAccounts';
 
 export const AdminLoginGate: React.FC = () => {
   const { adminLogin, setCurrentView, showToast } = useStore();

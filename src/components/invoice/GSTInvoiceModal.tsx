@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Printer, Download, CheckCircle2, Building, ShieldCheck } from 'lucide-react';
+import { X, Printer } from 'lucide-react';
 import { useStore } from '../../context/StoreContext';
 import { formatINR } from '../../utils/currency';
 import { calculateGST } from '../../utils/gst';

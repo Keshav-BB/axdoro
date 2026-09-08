@@ -3,15 +3,10 @@ import {
   Sparkles,
   Send,
   X,
-  Minimize2,
   RotateCcw,
   Bot,
   User,
   ArrowRight,
-  ShoppingBag,
-  Ruler,
-  MessageCircle,
-  ExternalLink,
 } from 'lucide-react';
 import { useStore } from '../../context/StoreContext';
 import {
@@ -22,6 +17,14 @@ import {
 } from '../../data/chatbotKnowledge';
 import { formatINR } from '../../utils/currency';
 import { getWhatsAppSupportUrl } from '../../utils/whatsapp';
+
+function createChatId(prefix: string): string {
+  return `${prefix}-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`;
+}
+
+function getChatTimeString(): string {
+  return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
 
 export const AIChatbot: React.FC = () => {
   const {
@@ -69,12 +72,11 @@ export const AIChatbot: React.FC = () => {
     const text = (textToSend || inputValue).trim();
     if (!text) return;
 
-    const userMsgId = `user-${Date.now()}`;
     const userMsg: ChatMessage = {
-      id: userMsgId,
+      id: createChatId('user'),
       sender: 'user',
       text,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      timestamp: getChatTimeString(),
     };
 
     setMessages((prev) => [...prev, userMsg]);
@@ -84,10 +86,10 @@ export const AIChatbot: React.FC = () => {
     setTimeout(() => {
       const { reply, actionButtons, suggestedProducts } = processUserQuery(text, products);
       const botMsg: ChatMessage = {
-        id: `bot-${Date.now()}`,
+        id: createChatId('bot'),
         sender: 'bot',
         text: reply,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        timestamp: getChatTimeString(),
         actionButtons,
         suggestedProducts,
       };
@@ -148,7 +150,7 @@ export const AIChatbot: React.FC = () => {
           <span className="hidden sm:inline text-xs font-mono font-bold tracking-tight text-amber-400">
             Ask AI Stylist
           </span>
-          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30 hidden lg:inline">
+          <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30 hidden lg:inline font-semibold">
             3D Fit
           </span>
         </button>
@@ -172,11 +174,11 @@ export const AIChatbot: React.FC = () => {
                   <h3 className="text-xs sm:text-sm font-bold font-mono tracking-wide text-white">
                     AXDORO AI Stylist
                   </h3>
-                  <span className="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                  <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
                     Online
                   </span>
                 </div>
-                <div className="text-[10px] font-mono text-zinc-400">
+                <div className="text-[11px] font-mono text-zinc-400">
                   Biometric & 240 GSM Fabric Intelligence
                 </div>
               </div>
@@ -253,7 +255,7 @@ export const AIChatbot: React.FC = () => {
                             <div className="text-[11px] font-bold text-white truncate font-sans">
                               {prod.name}
                             </div>
-                            <div className="text-[10px] font-mono text-amber-400 font-semibold">
+                            <div className="text-xs font-mono text-amber-400 font-semibold">
                               {formatINR(prod.price)}
                             </div>
                             <button
@@ -263,10 +265,10 @@ export const AIChatbot: React.FC = () => {
                                 setCurrentView('product-detail');
                                 setIsOpen(false);
                               }}
-                              className="mt-1 text-[9px] font-mono text-zinc-300 hover:text-white flex items-center gap-1 cursor-pointer bg-zinc-800 hover:bg-zinc-700 px-2 py-0.5 rounded-md"
+                              className="mt-1 text-[11px] font-mono text-zinc-300 hover:text-white flex items-center gap-1 cursor-pointer bg-zinc-800 hover:bg-zinc-700 px-2 py-0.5 rounded-md"
                             >
                               <span>View Drop</span>
-                              <ArrowRight className="w-2.5 h-2.5" />
+                              <ArrowRight className="w-3 h-3" />
                             </button>
                           </div>
                         </div>
@@ -290,7 +292,7 @@ export const AIChatbot: React.FC = () => {
                     </div>
                   )}
 
-                  <div className={`text-[9px] font-mono text-zinc-500 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
+                  <div className={`text-[10px] font-mono text-zinc-500 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
                     {msg.timestamp}
                   </div>
                 </div>
@@ -327,7 +329,7 @@ export const AIChatbot: React.FC = () => {
                 key={i}
                 type="button"
                 onClick={() => handleSendMessage(prompt)}
-                className="whitespace-nowrap px-2.5 py-1 rounded-full text-[10px] font-mono font-medium bg-zinc-800/70 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700/60 transition-all cursor-pointer shrink-0"
+                className="whitespace-nowrap px-3 py-1.5 rounded-full text-[11px] font-mono font-medium bg-zinc-800/70 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700/60 transition-all cursor-pointer shrink-0"
               >
                 {prompt}
               </button>

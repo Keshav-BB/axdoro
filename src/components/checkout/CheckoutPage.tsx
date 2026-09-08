@@ -61,6 +61,7 @@ export const CheckoutPage: React.FC = () => {
   const [gstin, setGstin] = useState('');
   const [isRazorpayOpen, setIsRazorpayOpen] = useState(false);
   const [isFitVerified, setIsFitVerified] = useState(false);
+  const [checkoutOrderId] = useState(() => `AXD-ORD-${Math.floor(1000 + Math.random() * 9000)}`);
   const [verifiedBiometrics, setVerifiedBiometrics] = useState<CalculatedBiometrics | null>(() => {
     return calculateBiometrics(
       178,
@@ -75,7 +76,8 @@ export const CheckoutPage: React.FC = () => {
 
   // Sync with currentUser when user logs in or switches account
   React.useEffect(() => {
-    if (currentUser) {
+    if (!currentUser) return;
+    const timer = setTimeout(() => {
       setCustomerName(currentUser.name);
       setEmail(currentUser.email);
       setPhone(currentUser.phone);
@@ -85,7 +87,8 @@ export const CheckoutPage: React.FC = () => {
         setCity(addr.city);
         setPincode(addr.pincode);
       }
-    }
+    }, 0);
+    return () => clearTimeout(timer);
   }, [currentUser]);
 
   const gstBreakdown = calculateGST(cartSubtotal, state);
@@ -578,7 +581,7 @@ export const CheckoutPage: React.FC = () => {
       <RazorpayModal
         isOpen={isRazorpayOpen}
         amount={totalAmount}
-        orderId={`AXD-ORD-${Math.floor(1000 + Math.random() * 9000)}`}
+        orderId={checkoutOrderId}
         customerName={customerName}
         customerPhone={phone}
         customerEmail={email}

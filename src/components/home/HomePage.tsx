@@ -2,12 +2,9 @@ import React from 'react';
 import {
   ArrowRight,
   Sparkles,
-  ShieldCheck,
-  Truck,
   CheckCircle2,
   Package,
   Zap,
-  Award,
   Flame,
 } from 'lucide-react';
 import { useStore } from '../../context/StoreContext';

@@ -1,5 +1,5 @@
-import { Product, TShirtSize, ProductCategory } from '../types';
-import { calculateBiometrics, CalculatedBiometrics } from '../utils/bodyBiometrics';
+import { Product, ProductCategory } from '../types';
+import { calculateBiometrics } from '../utils/bodyBiometrics';
 
 export interface ChatActionButton {
   label: string;
@@ -25,7 +25,7 @@ export const QUICK_PROMPTS = [
   '7-Day Size Exchange policy 🔄',
 ];
 
-interface IntentMatchResult {
+export interface IntentMatchResult {
   text: string;
   actionButtons?: ChatActionButton[];
   categoryFilter?: ProductCategory;

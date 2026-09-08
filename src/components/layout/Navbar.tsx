@@ -64,7 +64,7 @@ export const Navbar: React.FC = () => {
               <span className="text-2xl font-black tracking-wider text-zinc-950 uppercase font-mono">
                 AXDORO
               </span>
-              <span className="text-[9px] uppercase tracking-[0.25em] text-amber-600 font-bold -mt-1">
+              <span className="text-[11px] uppercase tracking-[0.18em] text-amber-600 font-extrabold -mt-1">
                 240 GSM Heavy Apparel
               </span>
             </div>
