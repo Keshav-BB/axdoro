@@ -1,0 +1,77 @@
+import { Product, Order } from '../types';
+import { generate200Products } from './productsGenerator';
+
+export const INITIAL_PRODUCTS: Product[] = generate200Products();
+
+export const INITIAL_ORDERS: Order[] = [
+  {
+    id: 'AXD-8492',
+    trackingNumber: 'SR-TN-9812401',
+    customerName: 'Karthik Subramanian',
+    email: 'karthik.sub@gmail.com',
+    phone: '9840123456',
+    address: '42, 2nd Main Road, Anna Nagar West',
+    city: 'Chennai',
+    state: 'Tamil Nadu',
+    pincode: '600040',
+    items: [
+      {
+        id: `${INITIAL_PRODUCTS[0].id}-L-blk`,
+        product: INITIAL_PRODUCTS[0],
+        selectedSize: 'L',
+        selectedColor: INITIAL_PRODUCTS[0].colors[0],
+        quantity: 1,
+      },
+      {
+        id: `${INITIAL_PRODUCTS[1].id}-L-wht`,
+        product: INITIAL_PRODUCTS[1],
+        selectedSize: 'L',
+        selectedColor: INITIAL_PRODUCTS[1].colors[1],
+        quantity: 1,
+      },
+    ],
+    subtotal: INITIAL_PRODUCTS[0].price + INITIAL_PRODUCTS[1].price,
+    shippingFee: 0,
+    discount: 0,
+    gstAmount: Math.round(((INITIAL_PRODUCTS[0].price + INITIAL_PRODUCTS[1].price) * 0.05 / 1.05) * 100) / 100,
+    total: INITIAL_PRODUCTS[0].price + INITIAL_PRODUCTS[1].price,
+    paymentMethod: 'Razorpay - UPI',
+    paymentStatus: 'Paid',
+    status: 'Shipped',
+    courier: 'Shiprocket Surface (BlueDart)',
+    estimatedDelivery: 'Tomorrow by 4:00 PM',
+    createdAt: '2026-09-06T14:30:00Z',
+    gstin: '33AABCK1234F1Z8',
+  },
+  {
+    id: 'AXD-8490',
+    trackingNumber: 'SR-TN-9812389',
+    customerName: 'Ananya Raghavan',
+    email: 'ananya.raghavan@outlook.com',
+    phone: '9790554433',
+    address: '15, Race Course Road',
+    city: 'Coimbatore',
+    state: 'Tamil Nadu',
+    pincode: '641018',
+    items: [
+      {
+        id: `${INITIAL_PRODUCTS[2].id}-M-blk`,
+        product: INITIAL_PRODUCTS[2],
+        selectedSize: 'M',
+        selectedColor: INITIAL_PRODUCTS[2].colors[0],
+        quantity: 1,
+      },
+    ],
+    subtotal: INITIAL_PRODUCTS[2].price,
+    shippingFee: 0,
+    discount: 0,
+    gstAmount: Math.round((INITIAL_PRODUCTS[2].price * 0.05 / 1.05) * 100) / 100,
+    total: INITIAL_PRODUCTS[2].price,
+    paymentMethod: 'Razorpay - Card',
+    paymentStatus: 'Paid',
+    status: 'Delivered',
+    courier: 'Shiprocket Air (Delhivery)',
+    estimatedDelivery: 'Delivered Yesterday',
+    createdAt: '2026-09-04T10:15:00Z',
+  },
+];
