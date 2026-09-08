@@ -95,18 +95,32 @@ export const Navbar: React.FC = () => {
             </button>
 
             <button
-              onClick={() => handleNavClick('shop', 'oversized')}
-              className="px-3.5 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-600 hover:text-zinc-950 hover:bg-zinc-50 rounded-full transition-all flex items-center gap-1.5"
+              onClick={() => handleNavClick('shop', 't-shirts')}
+              className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-600 hover:text-zinc-950 hover:bg-zinc-50 rounded-full transition-all flex items-center gap-1.5"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-              Oversized (240 GSM)
+              T-Shirts
             </button>
 
             <button
-              onClick={() => handleNavClick('shop', 'half-sleeve')}
-              className="px-3.5 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-600 hover:text-zinc-950 hover:bg-zinc-50 rounded-full transition-all"
+              onClick={() => handleNavClick('shop', 'shirts')}
+              className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-600 hover:text-zinc-950 hover:bg-zinc-50 rounded-full transition-all"
             >
-              Half-Sleeve
+              Shirts
+            </button>
+
+            <button
+              onClick={() => handleNavClick('shop', 'pants')}
+              className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-600 hover:text-zinc-950 hover:bg-zinc-50 rounded-full transition-all"
+            >
+              Pants & Trousers
+            </button>
+
+            <button
+              onClick={() => handleNavClick('shop', 'hoodies')}
+              className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-600 hover:text-zinc-950 hover:bg-zinc-50 rounded-full transition-all"
+            >
+              Hoodies
             </button>
 
             <button
@@ -277,17 +291,35 @@ export const Navbar: React.FC = () => {
             Shop All Collections
           </button>
           <button
-            onClick={() => handleNavClick('shop', 'oversized')}
+            onClick={() => handleNavClick('shop', 't-shirts')}
             className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-amber-700 hover:bg-amber-50 flex items-center gap-2"
           >
             <span className="w-2 h-2 rounded-full bg-amber-500"></span>
-            Oversized Heavyweight (240 GSM)
+            T-Shirts (240 GSM)
           </button>
           <button
-            onClick={() => handleNavClick('shop', 'half-sleeve')}
+            onClick={() => handleNavClick('shop', 'shirts')}
             className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-zinc-800 hover:bg-zinc-100"
           >
-            Half-Sleeve Boxy
+            Shirts & Overshirts
+          </button>
+          <button
+            onClick={() => handleNavClick('shop', 'pants')}
+            className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-zinc-800 hover:bg-zinc-100"
+          >
+            Pants & Trousers
+          </button>
+          <button
+            onClick={() => handleNavClick('shop', 'hoodies')}
+            className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-zinc-800 hover:bg-zinc-100"
+          >
+            Hoodies (400 GSM)
+          </button>
+          <button
+            onClick={() => handleNavClick('shop', 'shorts')}
+            className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-zinc-800 hover:bg-zinc-100"
+          >
+            Half Pants & Shorts
           </button>
           <button
             onClick={() => handleNavClick('tracking')}

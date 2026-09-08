@@ -204,7 +204,7 @@ export const HomePage: React.FC = () => {
             <div className="lg:col-span-5 relative">
               <div className="relative rounded-2xl overflow-hidden border border-zinc-300 shadow-xl bg-white">
                 <img
-                  src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80"
+                  src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=800&q=80"
                   alt="Fabric Detail"
                   className="w-full h-96 object-cover"
                 />

@@ -27,6 +27,13 @@ export const ProductDetailPage: React.FC = () => {
     setIsCartOpen,
   } = useStore();
 
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [selectedSize, setSelectedSize] = useState<TShirtSize>('L');
+  const [selectedColor, setSelectedColor] = useState<ColorOption | null>(null);
+  const [quantity, setQuantity] = useState(1);
+  const [pincode, setPincode] = useState('600040');
+  const [pincodeChecked, setPincodeChecked] = useState(true);
+
   if (!selectedProduct) {
     return (
       <div className="py-20 text-center text-zinc-500">
@@ -41,12 +48,7 @@ export const ProductDetailPage: React.FC = () => {
     );
   }
 
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [selectedSize, setSelectedSize] = useState<TShirtSize>('L');
-  const [selectedColor, setSelectedColor] = useState<ColorOption>(selectedProduct.colors[0]);
-  const [quantity, setQuantity] = useState(1);
-  const [pincode, setPincode] = useState('600040');
-  const [pincodeChecked, setPincodeChecked] = useState(true);
+  const activeColor = selectedColor || selectedProduct.colors[0];
 
   const selectedSizeStock =
     selectedProduct.sizes.find((s) => s.size === selectedSize)?.stock || 0;
@@ -56,11 +58,11 @@ export const ProductDetailPage: React.FC = () => {
   );
 
   const handleAddToCart = () => {
-    addToCart(selectedProduct, selectedSize, selectedColor, quantity);
+    addToCart(selectedProduct, selectedSize, activeColor, quantity);
   };
 
   const handleBuyNow = () => {
-    addToCart(selectedProduct, selectedSize, selectedColor, quantity);
+    addToCart(selectedProduct, selectedSize, activeColor, quantity);
     setIsCartOpen(true);
   };
 
@@ -230,7 +232,7 @@ export const ProductDetailPage: React.FC = () => {
           <div className="space-y-2.5">
             <div className="flex items-center justify-between text-xs">
               <span className="text-zinc-600 font-mono uppercase text-[11px]">
-                Color: <strong className="text-zinc-950">{selectedColor.name}</strong>
+                Color: <strong className="text-zinc-950">{activeColor.name}</strong>
               </span>
             </div>
             <div className="flex items-center gap-2.5">
@@ -239,14 +241,14 @@ export const ProductDetailPage: React.FC = () => {
                   key={color.code}
                   onClick={() => setSelectedColor(color)}
                   className={`w-8 h-8 rounded-full border-2 transition-all flex items-center justify-center ${
-                    selectedColor.code === color.code
+                    activeColor.code === color.code
                       ? 'border-zinc-950 scale-110 shadow-md shadow-zinc-950/20'
                       : 'border-zinc-300 hover:border-zinc-500'
                   }`}
                   style={{ backgroundColor: color.hex }}
                   title={color.name}
                 >
-                  {selectedColor.code === color.code && (
+                  {activeColor.code === color.code && (
                     <span
                       className={`w-2 h-2 rounded-full ${
                         color.hex === '#f3f0e6' || color.hex === '#ffffff'

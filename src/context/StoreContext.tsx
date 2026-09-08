@@ -154,13 +154,27 @@ const StoreContext = createContext<StoreContextType | undefined>(undefined);
 export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // State with LocalStorage fallbacks (ensure 200-product catalog is loaded)
   const [products, setProducts] = useState<Product[]>(() => {
-    const saved = localStorage.getItem('axdoro_products_v2');
+    const saved = localStorage.getItem('axdoro_products_v5');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length >= 150) return parsed;
+        if (
+          Array.isArray(parsed) &&
+          parsed.length >= 150 &&
+          parsed.some((p: Product) => p.category === 'hoodies') &&
+          !parsed[0]?.images?.[0]?.includes('1521572267360')
+        ) {
+          return parsed;
+        }
       } catch (e) {}
     }
+    // Clear stale legacy caches
+    try {
+      localStorage.removeItem('axdoro_products_v4');
+      localStorage.removeItem('axdoro_products_v3');
+      localStorage.removeItem('axdoro_products_v2');
+      localStorage.removeItem('axdoro_products');
+    } catch (e) {}
     return INITIAL_PRODUCTS;
   });
 
@@ -169,7 +183,14 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (
+          Array.isArray(parsed) &&
+          parsed.length > 0 &&
+          parsed[0]?.product?.images?.[0] &&
+          !parsed[0].product.images[0].includes('1521572267360')
+        ) {
+          return parsed;
+        }
       } catch (e) {}
     }
     return [
@@ -361,7 +382,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // Sync to local storage
   useEffect(() => {
-    localStorage.setItem('axdoro_products', JSON.stringify(products));
+    localStorage.setItem('axdoro_products_v5', JSON.stringify(products));
   }, [products]);
 
   useEffect(() => {

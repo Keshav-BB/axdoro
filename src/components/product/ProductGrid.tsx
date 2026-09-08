@@ -33,7 +33,7 @@ export const ProductGrid: React.FC = () => {
   // Multi-facet Filter States
   const [selectedSizeFilter, setSelectedSizeFilter] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'featured' | 'price-low' | 'price-high' | 'rating' | 'newest'>('featured');
-  const [priceMax, setPriceMax] = useState<number>(1499);
+  const [priceMax, setPriceMax] = useState<number>(2999);
   const [inStockOnly, setInStockOnly] = useState<boolean>(false);
   const [isFilterSidebarOpen, setIsFilterSidebarOpen] = useState<boolean>(false);
   const [gridCols, setGridCols] = useState<'3' | '4'>('3');
@@ -44,10 +44,15 @@ export const ProductGrid: React.FC = () => {
 
   const categories = [
     { id: 'all', label: 'All 200 Garments' },
-    { id: 'oversized', label: 'Oversized Boxy' },
-    { id: 'half-sleeve', label: 'Half-Sleeve Street' },
-    { id: 'acid-wash', label: 'Acid & Mineral Wash' },
-    { id: 'graphic', label: 'Cyber & 3D Puff Drops' },
+    { id: 't-shirts', label: 'T-Shirts (240 GSM)' },
+    { id: 'shirts', label: 'Shirts & Overshirts' },
+    { id: 'pants', label: 'Pants & Cargo' },
+    { id: 'trousers', label: 'Tailored Trousers' },
+    { id: 'track-pants', label: 'Track Pants & Joggers' },
+    { id: 'shorts', label: 'Shorts & Half Pants' },
+    { id: 'collared-tshirts', label: 'Collared Polos' },
+    { id: 'full-sleeve', label: 'Full-Sleeve Tees' },
+    { id: 'hoodies', label: 'Hoodies (400 GSM)' },
   ];
 
   // Reset to page 1 whenever filters change
@@ -59,7 +64,10 @@ export const ProductGrid: React.FC = () => {
     return products
       .filter((product) => {
         const matchesCategory =
-          selectedCategory === 'all' || product.category === selectedCategory;
+          selectedCategory === 'all' ||
+          product.category === selectedCategory ||
+          (selectedCategory === 'oversized' && product.category === 't-shirts') ||
+          (selectedCategory === 'half-sleeve' && product.category === 't-shirts');
 
         const matchesSize =
           selectedSizeFilter === 'all' ||
@@ -100,7 +108,7 @@ export const ProductGrid: React.FC = () => {
   const resetAllFilters = () => {
     setSelectedCategory('all');
     setSelectedSizeFilter('all');
-    setPriceMax(1499);
+    setPriceMax(2999);
     setInStockOnly(false);
     setSortBy('featured');
     setSearchQuery('');
@@ -110,7 +118,7 @@ export const ProductGrid: React.FC = () => {
   const hasActiveFilters = 
     selectedCategory !== 'all' || 
     selectedSizeFilter !== 'all' || 
-    priceMax < 1499 || 
+    priceMax < 2999 || 
     inStockOnly || 
     searchQuery !== '';
 
@@ -269,17 +277,17 @@ export const ProductGrid: React.FC = () => {
               </div>
               <input
                 type="range"
-                min={799}
-                max={1499}
+                min={699}
+                max={2999}
                 step={50}
                 value={priceMax}
                 onChange={(e) => setPriceMax(Number(e.target.value))}
                 className="w-full accent-zinc-900 cursor-pointer"
               />
               <div className="flex justify-between text-[10px] text-zinc-400 font-mono mt-1">
-                <span>₹799</span>
-                <span>₹1,149</span>
-                <span>₹1,499</span>
+                <span>₹699</span>
+                <span>₹1,849</span>
+                <span>₹2,999</span>
               </div>
             </div>
 
@@ -362,12 +370,12 @@ export const ProductGrid: React.FC = () => {
               />
             </span>
           )}
-          {priceMax < 1499 && (
+          {priceMax < 2999 && (
             <span className="bg-white border border-zinc-200 text-zinc-800 px-3 py-1 rounded-full flex items-center gap-1.5 shadow-xs">
               Max: <strong>₹{priceMax}</strong>
               <X
                 className="w-3 h-3 cursor-pointer hover:text-red-500"
-                onClick={() => setPriceMax(1499)}
+                onClick={() => setPriceMax(2999)}
               />
             </span>
           )}
@@ -406,7 +414,7 @@ export const ProductGrid: React.FC = () => {
               <ShoppingBag className="w-6 h-6" />
             </div>
             <h3 className="text-base text-zinc-900 font-bold font-serif">
-              No 240 GSM drops match your filter
+              No heavyweight drops match your filter
             </h3>
             <p className="text-xs text-zinc-500 mt-1 max-w-sm mx-auto">
               Try adjusting your price ceiling or resetting your size filter to explore our other heavyweight garments.

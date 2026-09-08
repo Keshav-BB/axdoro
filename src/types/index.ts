@@ -11,11 +11,27 @@ export interface ColorOption {
   code: string;
 }
 
+export type ProductCategory =
+  | 't-shirts'
+  | 'shirts'
+  | 'pants'
+  | 'trousers'
+  | 'track-pants'
+  | 'shorts'
+  | 'collared-tshirts'
+  | 'full-sleeve'
+  | 'hoodies'
+  | 'oversized'
+  | 'half-sleeve'
+  | 'acid-wash'
+  | 'graphic'
+  | 'minimalist';
+
 export interface Product {
   id: string;
   name: string;
   slug: string;
-  category: 'oversized' | 'half-sleeve' | 'acid-wash' | 'graphic' | 'minimalist';
+  category: ProductCategory;
   categoryLabel: string;
   price: number;
   originalPrice: number;

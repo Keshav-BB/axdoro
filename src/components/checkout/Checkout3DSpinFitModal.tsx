@@ -61,22 +61,22 @@ const BODY_PRESETS: BodyPreset[] = [
       {
         label: 'Front View',
         angle: '0° Front',
-        previewUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80',
+        previewUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
       },
       {
         label: 'Side Profile',
         angle: '90° Side',
-        previewUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
+        previewUrl: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80',
       },
       {
         label: '45° Angle',
         angle: '45° Semi',
-        previewUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=400&q=80',
+        previewUrl: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=400&q=80',
       },
       {
         label: 'Back Slope',
         angle: '180° Back',
-        previewUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+        previewUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=400&q=80',
       },
     ],
   },
@@ -91,22 +91,22 @@ const BODY_PRESETS: BodyPreset[] = [
       {
         label: 'Front View',
         angle: '0° Front',
-        previewUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=400&q=80',
+        previewUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
       },
       {
         label: 'Side Profile',
         angle: '90° Side',
-        previewUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80',
+        previewUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80',
       },
       {
         label: '45° Angle',
         angle: '45° Semi',
-        previewUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
+        previewUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=400&q=80',
       },
       {
         label: 'Back Slope',
         angle: '180° Back',
-        previewUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80',
+        previewUrl: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=400&q=80',
       },
     ],
   },
@@ -136,7 +136,7 @@ const BODY_PRESETS: BodyPreset[] = [
       {
         label: 'Back Slope',
         angle: '180° Back',
-        previewUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+        previewUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80',
       },
     ],
   },
@@ -158,6 +158,7 @@ export const Checkout3DSpinFitModal: React.FC<Checkout3DSpinFitModalProps> = ({
   const [customPhotos, setCustomPhotos] = useState<string[]>([]);
   const [isAutoSpinning, setIsAutoSpinning] = useState(false);
   const [currentFrame, setCurrentFrame] = useState(0);
+  const [viewPerspective, setViewPerspective] = useState<'garment' | 'avatar'>('garment');
   const [isDragging, setIsDragging] = useState(false);
   const [isScanning, setIsScanning] = useState(false);
 
@@ -179,7 +180,7 @@ export const Checkout3DSpinFitModal: React.FC<Checkout3DSpinFitModalProps> = ({
   
   // Extend to 8 frames around 360
   const spinFrames = [
-    rawSpinFrames[0] || 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80',
+    rawSpinFrames[0] || 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&q=80',
     rawSpinFrames[1] || rawSpinFrames[0],
     rawSpinFrames[2] || rawSpinFrames[1] || rawSpinFrames[0],
     rawSpinFrames[3] || rawSpinFrames[0],
@@ -470,7 +471,33 @@ export const Checkout3DSpinFitModal: React.FC<Checkout3DSpinFitModalProps> = ({
                     <span>360° ROTATION: {currentAngle}°</span>
                   </div>
 
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-2">
+                    {/* View mode toggle */}
+                    <div className="flex items-center gap-1 bg-zinc-100 p-0.5 rounded-lg">
+                      <button
+                        type="button"
+                        onClick={() => setViewPerspective('garment')}
+                        className={`px-2 py-0.5 rounded-md text-[11px] font-mono font-bold transition-all ${
+                          viewPerspective === 'garment'
+                            ? 'bg-white text-zinc-950 shadow-xs'
+                            : 'text-zinc-500 hover:text-zinc-950'
+                        }`}
+                      >
+                        Garment
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setViewPerspective('avatar')}
+                        className={`px-2 py-0.5 rounded-md text-[11px] font-mono font-bold transition-all ${
+                          viewPerspective === 'avatar'
+                            ? 'bg-white text-zinc-950 shadow-xs'
+                            : 'text-zinc-500 hover:text-zinc-950'
+                        }`}
+                      >
+                        Avatar
+                      </button>
+                    </div>
+
                     <button
                       type="button"
                       onClick={() => setIsAutoSpinning(!isAutoSpinning)}
@@ -481,7 +508,7 @@ export const Checkout3DSpinFitModal: React.FC<Checkout3DSpinFitModalProps> = ({
                       }`}
                     >
                       {isAutoSpinning ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
-                      <span>{isAutoSpinning ? 'Pause Orbit' : 'Auto Orbit'}</span>
+                      <span>{isAutoSpinning ? 'Pause' : 'Orbit'}</span>
                     </button>
                   </div>
                 </div>
@@ -498,7 +525,13 @@ export const Checkout3DSpinFitModal: React.FC<Checkout3DSpinFitModalProps> = ({
                   className="relative w-full aspect-square max-w-[420px] rounded-2xl overflow-hidden bg-gradient-to-b from-zinc-50 to-zinc-100 border border-zinc-200/80 cursor-grab active:cursor-grabbing select-none flex items-center justify-center shadow-inner"
                 >
                   <img
-                    src={spinFrames[currentFrame]}
+                    src={
+                      viewPerspective === 'avatar'
+                        ? selectedPreset.photos[
+                            currentFrame < 2 ? 0 : currentFrame < 4 ? 1 : currentFrame < 6 ? 2 : 3
+                          ]?.previewUrl || spinFrames[currentFrame]
+                        : spinFrames[currentFrame]
+                    }
                     alt={`360 angle view ${currentAngle} degrees`}
                     className="w-full h-full object-contain p-4 drop-shadow-xl transition-all duration-75 pointer-events-none"
                   />
@@ -506,17 +539,35 @@ export const Checkout3DSpinFitModal: React.FC<Checkout3DSpinFitModalProps> = ({
                   {/* Drape Anatomical Hotspots */}
                   <div className="absolute top-12 left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-full bg-zinc-950/80 backdrop-blur-md text-white text-[10px] font-mono border border-amber-400/40 shadow-lg flex items-center gap-1 pointer-events-none">
                     <div className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></div>
-                    <span>1.25" Non-Sag Collar</span>
+                    <span>
+                      {activeProduct?.category === 'hoodies'
+                        ? 'Double-Layer Upright Hood'
+                        : activeProduct?.category === 'shirts'
+                        ? 'Crisp Structured Collar'
+                        : activeProduct?.category === 'pants' || activeProduct?.category === 'trousers'
+                        ? 'Pleated Contour Waist'
+                        : activeProduct?.category === 'shorts'
+                        ? 'Elastic Drawcord Waist'
+                        : '1.25" Non-Sag Collar'}
+                    </span>
                   </div>
 
                   <div className="absolute top-28 left-6 px-2.5 py-1 rounded-full bg-zinc-950/80 backdrop-blur-md text-white text-[10px] font-mono border border-amber-400/40 shadow-lg flex items-center gap-1 pointer-events-none">
                     <div className="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
-                    <span>Drop-Shoulder Silhouette</span>
+                    <span>
+                      {activeProduct?.category === 'pants' || activeProduct?.category === 'track-pants'
+                        ? 'Ergonomic Articulated Knee'
+                        : activeProduct?.category === 'shorts'
+                        ? '7-Inch Above-Knee Inseam'
+                        : activeProduct?.category === 'trousers'
+                        ? 'Tailored Wide-Leg Cut'
+                        : 'Drop-Shoulder Silhouette'}
+                    </span>
                   </div>
 
                   <div className="absolute bottom-16 right-6 px-2.5 py-1 rounded-full bg-zinc-950/80 backdrop-blur-md text-white text-[10px] font-mono border border-amber-400/40 shadow-lg flex items-center gap-1 pointer-events-none">
                     <div className="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
-                    <span>240 GSM Non-Cling Fall</span>
+                    <span>{`${activeProduct?.gsm || 240} GSM Heavy Fall`}</span>
                   </div>
 
                   {/* Drag Prompt overlay */}
