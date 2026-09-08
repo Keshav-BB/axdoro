@@ -59,6 +59,8 @@ interface StoreContextType {
   setIsCartOpen: (open: boolean) => void;
   isAITryOnOpen: boolean;
   setIsAITryOnOpen: (open: boolean) => void;
+  is3DSpinFitOpen: boolean;
+  setIs3DSpinFitOpen: (open: boolean) => void;
   isSizeGuideOpen: boolean;
   setIsSizeGuideOpen: (open: boolean) => void;
   isInvoiceOpen: boolean;
@@ -264,6 +266,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const urlParams = new URLSearchParams(window.location.search);
   const [isCartOpen, setIsCartOpen] = useState(urlParams.get('cart') === 'true');
   const [isAITryOnOpen, setIsAITryOnOpen] = useState(urlParams.get('ai') === 'true');
+  const [is3DSpinFitOpen, setIs3DSpinFitOpen] = useState(urlParams.get('fitCheck') === 'true');
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(urlParams.get('sizeGuide') === 'true');
   const [isInvoiceOpen, setIsInvoiceOpen] = useState(urlParams.get('invoice') === 'true');
   const [isBulkOrderOpen, setIsBulkOrderOpen] = useState(urlParams.get('bulk') === 'true');
@@ -565,6 +568,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setIsCartOpen,
         isAITryOnOpen,
         setIsAITryOnOpen,
+        is3DSpinFitOpen,
+        setIs3DSpinFitOpen,
         isSizeGuideOpen,
         setIsSizeGuideOpen,
         isInvoiceOpen,

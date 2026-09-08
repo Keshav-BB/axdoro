@@ -19,15 +19,20 @@ import { BulkOrderModal } from './components/custom/BulkOrderModal';
 import { PolicyModal } from './components/policy/PolicyModal';
 import { AuthModal } from './components/auth/AuthModal';
 import { UserProfileDrawer } from './components/auth/UserProfileDrawer';
+import { AIChatbot } from './components/chat/AIChatbot';
+import { Checkout3DSpinFitModal } from './components/checkout/Checkout3DSpinFitModal';
 import { MessageCircle, CheckCircle, Info, AlertCircle } from 'lucide-react';
 import { getWhatsAppSupportUrl } from './utils/whatsapp';
 
 const MainContent: React.FC = () => {
   const {
     currentView,
+    setCurrentView,
     selectedProduct,
     isAITryOnOpen,
     setIsAITryOnOpen,
+    is3DSpinFitOpen,
+    setIs3DSpinFitOpen,
     isSizeGuideOpen,
     setIsSizeGuideOpen,
     toasts,
@@ -75,6 +80,22 @@ const MainContent: React.FC = () => {
       <PolicyModal />
       <AuthModal />
       <UserProfileDrawer />
+
+      {/* Global 3D Personal Avatar Studio when triggered outside Checkout */}
+      {currentView !== 'checkout' && (
+        <Checkout3DSpinFitModal
+          isOpen={is3DSpinFitOpen}
+          onClose={() => setIs3DSpinFitOpen(false)}
+          onConfirmAndPay={() => {
+            setIs3DSpinFitOpen(false);
+            setCurrentView('checkout');
+          }}
+          selectedCity="Chennai"
+        />
+      )}
+
+      {/* AI Fashion Stylist & Concierge Chatbot */}
+      <AIChatbot />
 
       {/* Floating WhatsApp Support Button */}
       <aside aria-label="Customer Support" className="fixed bottom-6 right-6 z-40">

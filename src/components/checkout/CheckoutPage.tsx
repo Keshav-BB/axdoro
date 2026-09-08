@@ -38,7 +38,16 @@ const TN_DISTRICTS = [
 ];
 
 export const CheckoutPage: React.FC = () => {
-  const { cart, cartSubtotal, createOrder, setCurrentView, currentUser, setIsAuthModalOpen } = useStore();
+  const {
+    cart,
+    cartSubtotal,
+    createOrder,
+    setCurrentView,
+    currentUser,
+    setIsAuthModalOpen,
+    is3DSpinFitOpen,
+    setIs3DSpinFitOpen,
+  } = useStore();
 
   const [customerName, setCustomerName] = useState(currentUser ? currentUser.name : 'Karthik Subramanian');
   const [email, setEmail] = useState(currentUser ? currentUser.email : 'karthik.sub@gmail.com');
@@ -51,9 +60,6 @@ export const CheckoutPage: React.FC = () => {
   const [pincode, setPincode] = useState(defaultAddr ? defaultAddr.pincode : '600040');
   const [gstin, setGstin] = useState('');
   const [isRazorpayOpen, setIsRazorpayOpen] = useState(false);
-  const [is3DSpinFitOpen, setIs3DSpinFitOpen] = useState(() => {
-    return new URLSearchParams(window.location.search).get('fitCheck') === 'true';
-  });
   const [isFitVerified, setIsFitVerified] = useState(false);
   const [verifiedBiometrics, setVerifiedBiometrics] = useState<CalculatedBiometrics | null>(() => {
     return calculateBiometrics(
