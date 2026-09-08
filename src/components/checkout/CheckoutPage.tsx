@@ -17,6 +17,7 @@ import { calculateGST } from '../../utils/gst';
 import { RazorpayModal } from './RazorpayModal';
 import { Checkout3DSpinFitModal } from './Checkout3DSpinFitModal';
 import { getDistrictWeather } from '../../data/weatherData';
+import { calculateBiometrics, CalculatedBiometrics } from '../../utils/bodyBiometrics';
 
 const TN_DISTRICTS = [
   'Chennai',
@@ -54,6 +55,16 @@ export const CheckoutPage: React.FC = () => {
     return new URLSearchParams(window.location.search).get('fitCheck') === 'true';
   });
   const [isFitVerified, setIsFitVerified] = useState(false);
+  const [verifiedBiometrics, setVerifiedBiometrics] = useState<CalculatedBiometrics | null>(() => {
+    return calculateBiometrics(
+      178,
+      76,
+      'male',
+      'athletic',
+      cart[0]?.selectedSize || 'L',
+      cart[0]?.product?.category || 't-shirts'
+    );
+  });
   const weather = getDistrictWeather(city);
 
   // Sync with currentUser when user logs in or switches account
@@ -375,33 +386,35 @@ export const CheckoutPage: React.FC = () => {
               </div>
             </div>
 
-            {/* 3D 360° Spin Fit & Weather Suitability Check Card */}
-            <div className={`p-5 rounded-2xl border transition-all shadow-xs space-y-3 ${
+            {/* 3D Personal Avatar & Biometric Fit Check Card */}
+            <div className={`p-5 rounded-3xl border transition-all shadow-xs space-y-3.5 ${
               isFitVerified 
-                ? 'bg-emerald-50/40 border-emerald-300' 
+                ? 'bg-emerald-50/50 border-emerald-300 shadow-emerald-500/5' 
                 : 'bg-gradient-to-br from-amber-500/10 via-amber-400/5 to-white border-amber-400/40'
             }`}>
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="w-7 h-7 rounded-lg bg-zinc-950 text-amber-400 flex items-center justify-center font-bold text-xs">
+                    <span className="w-8 h-8 rounded-xl bg-zinc-950 text-amber-400 flex items-center justify-center font-bold text-xs shadow-xs">
                       3D
                     </span>
-                    <h3 className="text-xs sm:text-sm font-bold font-mono uppercase tracking-wide text-zinc-950">
-                      360° Spin Fit & Climate Suitability
-                    </h3>
-                    {isFitVerified ? (
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold border border-emerald-300">
-                        ✓ Verified Match
-                      </span>
-                    ) : (
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-900 font-bold border border-amber-400/30 animate-pulse">
-                        Recommended Check
-                      </span>
-                    )}
+                    <div>
+                      <h3 className="text-xs sm:text-sm font-bold font-mono uppercase tracking-wide text-zinc-950 flex items-center gap-2">
+                        <span>Personal 3D Avatar & Fit Simulation</span>
+                        {isFitVerified ? (
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold border border-emerald-300">
+                            ✓ Calibrated & Verified
+                          </span>
+                        ) : (
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-900 font-bold border border-amber-400/30 animate-pulse">
+                            Height & Weight Fit Check
+                          </span>
+                        )}
+                      </h3>
+                    </div>
                   </div>
                   <p className="text-[11px] text-zinc-600 max-w-md leading-relaxed">
-                    Rotate your 3D avatar in 360° orbit wearing this drop. Verified for <strong>{city}</strong> ({weather.tempC}°C, {weather.condition}).
+                    Calculated 3D model wearing your cart items. Verified for <strong>{city}</strong> ({weather.tempC}°C, {weather.condition}).
                   </p>
                 </div>
 
@@ -411,23 +424,51 @@ export const CheckoutPage: React.FC = () => {
                   className="px-4 py-2.5 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-white font-mono font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-sm hover:scale-[1.02] cursor-pointer shrink-0"
                 >
                   <RotateCw className="w-3.5 h-3.5 text-amber-400 animate-spin-slow" />
-                  <span>{isFitVerified ? 'Review 360° Fit' : 'Launch 3D 360° Spin'}</span>
+                  <span>{isFitVerified ? 'Review Personal 3D Fit' : 'Launch 3D Biometric Studio'}</span>
                 </button>
               </div>
 
+              {/* Biometrics & Drape Stats Callout */}
+              {verifiedBiometrics && (
+                <div className="p-3 bg-white/80 border border-zinc-200/80 rounded-2xl flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-zinc-100 border border-zinc-200 flex items-center justify-center text-zinc-700 font-bold text-[11px]">
+                      {cart[0]?.selectedSize || 'L'}
+                    </div>
+                    <div>
+                      <div className="text-zinc-950 font-bold">
+                        {verifiedBiometrics.heightCm} cm ({verifiedBiometrics.heightFtIn.split(' ')[0]}) • {verifiedBiometrics.weightKg} kg • Chest {verifiedBiometrics.chestInches}"
+                      </div>
+                      <div className="text-[10px] text-zinc-500">
+                        {verifiedBiometrics.sizeEvaluation.fitVerdict.slice(0, 75)}...
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 font-bold">
+                      +{verifiedBiometrics.sizeEvaluation.easeCm}cm Ease
+                    </span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-700 font-bold">
+                      {verifiedBiometrics.sizeEvaluation.shoulderDropInches}" Drop-Shoulder
+                    </span>
+                  </div>
+                </div>
+              )}
+
               {/* Mini Climate & Spec Bar */}
-              <div className="pt-3 border-t border-zinc-200/70 grid grid-cols-2 sm:grid-cols-3 gap-2 text-[11px] font-mono text-zinc-600">
+              <div className="pt-2 border-t border-zinc-200/70 grid grid-cols-2 sm:grid-cols-3 gap-2 text-[11px] font-mono text-zinc-600">
                 <div className="flex items-center gap-1.5">
                   <CloudSun className="w-3.5 h-3.5 text-amber-600 shrink-0" />
                   <span>{city}: <strong>{weather.tempC}°C ({weather.suitabilityScore}%)</strong></span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <Sparkles className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                  <span>Anti-Cling: <strong>100% Breathable</strong></span>
+                  <span>Zero-Cling: <strong>100% Breathable</strong></span>
                 </div>
                 <div className="hidden sm:flex items-center gap-1.5 col-span-1">
                   <Camera className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
-                  <span>4-Angle Body Scan Ready</span>
+                  <span>Photo & 3D Mesh Mapped</span>
                 </div>
               </div>
             </div>
@@ -539,13 +580,14 @@ export const CheckoutPage: React.FC = () => {
         onClose={() => setIsRazorpayOpen(false)}
       />
 
-      {/* 3D 360° Fit & Weather Suitability Check Modal */}
+      {/* 3D Personal Avatar & Virtual Fitting Modal */}
       <Checkout3DSpinFitModal
         isOpen={is3DSpinFitOpen}
         onClose={() => setIs3DSpinFitOpen(false)}
-        onConfirmAndPay={() => {
+        onConfirmAndPay={(bio) => {
           setIs3DSpinFitOpen(false);
           setIsFitVerified(true);
+          if (bio) setVerifiedBiometrics(bio);
           setIsRazorpayOpen(true);
         }}
         selectedCity={city}
