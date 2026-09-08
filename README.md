@@ -332,7 +332,22 @@ The project compiles to a completely static, zero-server Single Page Application
    - Build Command: `npm run build`
    - Output Directory: `dist`
 
-### Option B: Netlify
+### Option B: GitHub Pages (Live at `https://keshav-bb.github.io/axdoro/`)
+This project is configured with dual GitHub Pages deployment:
+
+1. **Automated CI/CD via GitHub Actions**:
+   - Every push to `main` triggers `.github/workflows/deploy.yml` which builds and deploys automatically.
+   - Enable via: **Repo Settings** → **Pages** → **Source**: `GitHub Actions`.
+
+2. **Branch Deployment via `gh-pages`**:
+   - Ready-to-serve build is pre-published on the `gh-pages` branch.
+   - Run manual deployment at any time:
+     ```bash
+     npm run deploy
+     ```
+   - Enable via: **Repo Settings** → **Pages** → **Source**: `Deploy from a branch` (`gh-pages` / `root`).
+
+### Option C: Netlify
 1. Create `netlify.toml`:
    ```toml
    [build]
